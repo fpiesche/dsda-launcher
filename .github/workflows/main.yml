@@ -9,9 +9,11 @@ env:
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ main ]
+    branches:
+      - master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -63,7 +65,7 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
-          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-win64.dmg
+          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-win64.zip
           
   build-linux:
     runs-on: ubuntu-latest
@@ -106,6 +108,14 @@ jobs:
         with:
           name: dsda-launcher-dev-linux
           path: src/build/DSDA-Launcher-x86_64.AppImage
+
+      - name: Release
+        if: ${{ contains(github.ref, 'tags') }}
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ github.ref_name }}
+          allowUpdates: true
+          artifacts: src/build/DSDA-Launcher-x86_64.AppImage
           
   build-macos:
     runs-on: macos-latest
