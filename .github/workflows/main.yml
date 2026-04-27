@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Set reference slug
+        run: echo "REF_SLUG=${GITHUB_REF////_}" >> $GITHUB_ENV
     
       - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c
         with:
@@ -44,21 +47,21 @@ jobs:
           cd build
           qmake ..
           make
-          zip -j dsda-launcher-${{ github.ref_name }}-win64.zip release/dsda-launcher.exe
+          zip -j dsda-launcher-${{ env.REF_SLUG }}-win64.zip release/dsda-launcher.exe
           
       - name: Store build as artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: dsda-launcher-dev-win64
-          path: src\build\dsda-launcher-${{ github.ref_name }}-win64.zip
+          path: src\build\dsda-launcher-${{ env.REF_SLUG }}-win64.zip
 
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
         uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
-          name: ${{ github.ref_name }}
+          name: ${{ env.REF_SLUG }}
           allowUpdates: true
-          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-win64.dmg
+          artifacts: src/build/dsda-launcher-${{ env.REF_SLUG }}-win64.dmg
           
   build-linux:
     name: Linux
@@ -66,7 +69,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      
+
       - name: Install Qt
         uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730
         with:
@@ -113,7 +116,10 @@ jobs:
           host: 'mac'
           target: 'desktop'
           arch: 'clang_64'
-          
+
+      - name: Set reference slug
+        run: echo "REF_SLUG=${GITHUB_REF////_}" >> $GITHUB_ENV
+
       - name: Build
         run: |
           cd src
@@ -124,13 +130,13 @@ jobs:
           macdeployqt ./dsda-launcher.app
 
           brew install create-dmg
-          create-dmg --app-drop-link 10 10 ./dsda-launcher-${{ github.ref_name }}-mac.dmg ./dsda-launcher.app
+          create-dmg --app-drop-link 10 10 ./dsda-launcher-${{ env.REF_SLUG }}-mac.dmg ./dsda-launcher.app
           
       - name: Store build as artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: dsda-launcher-dev-mac
-          path: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
+          path: src/build/dsda-launcher-${{ env.REF_SLUG }}-mac.dmg
     
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
@@ -138,4 +144,4 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
-          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
+          artifacts: src/build/dsda-launcher-${{ env.REF_SLUG }}-mac.dmg
