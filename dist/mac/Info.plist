@@ -26,7 +26,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Doom WAD file</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
@@ -38,7 +38,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Doom demo recording</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
@@ -50,7 +50,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Doom Dehacked patch</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
@@ -62,7 +62,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Boom Extended Dehacked patch</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
@@ -74,7 +74,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Heretic HHE patch</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
@@ -86,7 +86,7 @@
                         <key>CFBundleTypeName</key>
                         <string>Strife Sehacked patch</string>
                         <key>CFBundleTypeIconFile</key>
-                        <string>doom-launcher.icns</string>
+                        <string>dsda-launcher.icns</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
                         <key>CFBundleTypeExtensions</key>
