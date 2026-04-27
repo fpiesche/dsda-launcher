@@ -25,9 +25,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     
-      - uses: msys2/setup-msys2@v2
+      - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c
         with:
           msystem: MINGW64
           path-type: minimal
@@ -52,14 +52,14 @@ jobs:
           make
           zip -j dsda-launcher-${{ github.ref_name }}-win64.zip release/dsda-launcher.exe
           
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: dsda-launcher-dev-win64
           path: src\build\dsda-launcher-${{ github.ref_name }}-win64.zip
 
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
@@ -68,7 +68,7 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       
       - name: Install Qt
         uses: jurplel/install-qt-action@v4.1.1
@@ -95,7 +95,7 @@ jobs:
           chmod a+x ./linuxdeploy-plugin-qt-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --plugin=qt --executable=./dsda-launcher --output=appimage --appdir=./ --desktop-file=../icons/dsda-Launcher.desktop --icon-file=../icons/dsda-launcher.svg
       
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: dsda-launcher-dev-linux
           path: src/build
@@ -103,10 +103,10 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4.1.1
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730
         with:
           aqtversion: '==3.1.*'
           version: '6.2.0'
@@ -126,14 +126,14 @@ jobs:
           brew install create-dmg
           create-dmg --app-drop-link 10 10 ./dsda-launcher-${{ github.ref_name }}-mac.dmg ./dsda-launcher.app
           
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: dsda-launcher-dev-mac
           path: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
     
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
