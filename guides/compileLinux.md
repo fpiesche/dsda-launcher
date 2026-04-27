@@ -10,47 +10,54 @@ You could also install qt using your prefered package manager
 
 ## Compiling
 
-1. Clone this repo
-```
-git clone https://github.com/Pedro-Beirao/dsda-launcher.git
-```
-
-2. Create a "build" folder inside src/
-```
+```bash
+# clone the repository
+git clone https://github.com/Pedro-Beirao/dsda-launcher.git  
+# enter your local copy
 cd dsda-launcher
-cd src
-
-mkdir build
-cd build
-```
-3. Run qmake from the build folder
-```
-qmake6 ..
-```
-4. Run make
-```
-make
+# configure the build to find dependencies etc.
+cmake -B build -G Ninja .
+# compile dsda-launcher
+cmake --build build
 ```
 
-A basic build+install script would be
-```
-#!/bin/bash
+This will configure the build to run using the Ninja build system for
+automatic use of multiple CPU cores etc. If you don't have Ninja available,
+simply run `cmake -B build .` instead to configure without it.
 
-# building
-	mkdir -p "./src/build"
-	cd "./src/build"
-	qmake6 ..
-	make
-	
-#installing
-	sudo mv ./dsda-launcher /bin
-	cd ..
-	sudo install -Dm644 ./icons/dsda-launcher.png "${pkgdir}"/usr/share/pixmaps/dsda-launcher.png
-	sudo install -Dm644 ./icons/dsda-Launcher.desktop "${pkgdir}"/usr/share/applications/dsda-Launcher.desktop
-```
 
+## Installing or packaging
+
+To install a build made using the above instructions, simply run
+`cmake --install build`. You can customize the installation directory
+by using the `-DCMAKE_PREFIX` variable when configuring; e.g. to
+configure, build and install dsda-launcher to your local user directory
+in `~/.local/bin/dsda-launcher`:
+
+```bash
+git clone https://github.com/Pedro-Beirao/dsda-launcher.git
+cd dsda-launcher
+cmake -B build -G Ninja -DCMAKE_PREFIX=~/.local
+cmake --build build
+cmake --install build
+```
 
 
 ## Distributing
 
-For distribution of the binary, you can use `linuxdeployqt` which makes an appimage with everything the users will need to run in their system.
+To make creating distributions easier, CPack is also configured by the
+CMake setup. By default, this will create a `.zip` and a `.tar.gz` archive
+of the compiled build, an `AppImage` and a system package for Ubuntu/Debian
+or Fedora if the build is run on one of these systems.
+
+After compiling:
+
+```bash
+cd build
+cpack
+```
+
+This will generate all default options and copy them to `build/dist/`.
+You can customize which packages to create by running `cpack -G [generators]`
+instead, e.g. `cpack -G External` to build only the AppImage or
+`cpack -G DEB` to only create a Debian/Ubuntu package.

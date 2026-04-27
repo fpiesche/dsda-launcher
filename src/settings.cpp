@@ -245,7 +245,7 @@ void Settings::on_darkTheme_checkBox_clicked(bool checked)
                              "QComboBox {border: 1px solid rgb(79, 79, 79);background: rgb(53, 53, 53);}"
                              "QComboBox::disabled {border: 1px solid rgb(60, 60, 60);}"
                              "QComboBox::arrow {border: 1px solid rgb(60, 60, 60);}"
-                             "QComboBox::drop-down {margin: 5px; padding-left: 12px; height: 12px; width: 12px; image: url(\":/pngs/pngs/combo_box_arrow.png\");}"
+                             "QComboBox::drop-down {margin: 5px; padding-left: 12px; height: 12px; width: 12px; image: url(\":/pngs/src/pngs/combo_box_arrow.png\");}"
                              "QGroupBox {border: 1px solid rgb(79, 79, 79);}"
                              "QComboBox:hover {border: 1px solid rgb(4,93,244); background-color: rgb(55,63,76)}"
                              "QComboBox:on {border: 1px solid rgb(4,93,244); background-color: rgb(43,69,94); selection-background-color:rgb(79, 79, 79)}"

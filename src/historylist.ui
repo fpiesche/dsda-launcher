@@ -260,7 +260,7 @@ DEMO</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-image: url(:/pngs/pngs/reload.png);
+image: url(:/pngs/src/pngs/reload.png);
 border-radius:10px;
 }
 QPushButton::pressed{

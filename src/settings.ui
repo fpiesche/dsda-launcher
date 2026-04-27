@@ -191,7 +191,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/pngs/pngs/minus.png);</string>
+      <string notr="true">border-image: url(:/pngs/src/pngs/minus.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -233,7 +233,7 @@ border-radius:3px</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/pngs/pngs/plus.png);</string>
+      <string notr="true">border-image: url(:/pngs/src/pngs/plus.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -294,7 +294,7 @@ border-radius:3px</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/pngs/pngs/minus.png);</string>
+      <string notr="true">border-image: url(:/pngs/src/pngs/minus.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -396,7 +396,7 @@ border-radius:3px</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/pngs/pngs/plus.png);</string>
+      <string notr="true">border-image: url(:/pngs/src/pngs/plus.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -735,7 +735,7 @@ border-radius:3px</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/down.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/down.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
@@ -752,7 +752,7 @@ color: rgb(255, 255, 255);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/up.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/up.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
@@ -900,7 +900,7 @@ border-radius:3px</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/plus.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/plus.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
@@ -917,7 +917,7 @@ color: rgb(255, 255, 255);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/minus.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/minus.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">

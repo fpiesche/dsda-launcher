@@ -890,7 +890,7 @@ border-radius:3px</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/plus.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/plus.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
@@ -907,7 +907,7 @@ color: rgb(255, 255, 255);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/pngs/pngs/minus.png);
+       <string notr="true">border-image: url(:/pngs/src/pngs/minus.png);
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">

@@ -25,41 +25,52 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     
-      - uses: msys2/setup-msys2@v2
+      - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c
         with:
           msystem: MINGW64
           path-type: minimal
           update: true
           install: >-
-            mingw-w64-x86_64-qt5-static
+            mingw-w64-x86_64-qt6-static
+            mingw-w64-x86_64-qt6-svg
+            mingw-w64-x86_64-qt6-base
+            mingw-w64-x86_64-libwebp
             mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-make
+            mingw-w64-x86_64-cmake
             mingw-w64-x86_64-openssl
-            make
             zip
             
-      - shell: msys2 {0}
+      - name: Configure
+        shell: msys2 {0}
         run: |
           export PATH="/mingw64/bin:$PATH"
-          export PATH="/mingw64/qt5-static/bin:$PATH"
+          export PATH="/mingw64/qt6-static/bin:$PATH"
+          cmake -B build -GNinja -DCMAKE_INSTALL_PREFIX=inst -DQT_DEBUG_FIND_PACKAGE=ON
+
+      - name: Build
+        shell: msys2 {0}
+        run: |
+          export PATH="/mingw64/bin:$PATH"
+          export PATH="/mingw64/qt6-static/bin:$PATH"
+          cmake --build build
+
+      - name: Package
+        shell: msys2 {0}
+        run: |
+          export PATH="/mingw64/bin:$PATH"
+          export PATH="/mingw64/qt6-static/bin:$PATH"
+          cd build && cpack
           
-          cd src
-          mkdir build
-          cd build
-          qmake ..
-          make
-          zip -j dsda-launcher-${{ github.ref_name }}-win64.zip release/dsda-launcher.exe
-          
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: dsda-launcher-dev-win64
-          path: src\build\dsda-launcher-${{ github.ref_name }}-win64.zip
+          archive: false
+          path: "build/dist/dsda-launcher-*.zip"
 
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
@@ -68,72 +79,83 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4.1.1
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730
         with:
-          aqtversion: '==3.1.*'
-          version: '6.2.0'
+          version: '6.8.*'
           host: 'linux'
           target: 'desktop'
-          arch: 'gcc_64'
+          arch: 'linux_gcc_64'
           tools: 'tools_opensslv3_src'
-          
-      - name: build
+
+      - name: Install required packages
         run: |
           sudo apt install libfuse2
-          cd src
-          mkdir build
-          cd build
-          qmake ..
-          make
 
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
-          chmod a+x ./linuxdeploy-x86_64.AppImage
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/latest/download/linuxdeploy-plugin-qt-x86_64.AppImage"
-          chmod a+x ./linuxdeploy-plugin-qt-x86_64.AppImage
-          ./linuxdeploy-x86_64.AppImage --plugin=qt --executable=./dsda-launcher --output=appimage --appdir=./ --desktop-file=../icons/dsda-Launcher.desktop --icon-file=../icons/dsda-launcher.svg
-      
-      - uses: actions/upload-artifact@v4
+      - name: Configure
+        run: |
+          cmake -B build -GNinja
+
+      - name: Build
+        run: |
+          cmake --build build
+
+      - name: Package
+        run: |
+          cd build && cpack
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: dsda-launcher-dev-linux
-          path: src/build
-          
+          archive: false
+          path: "build/dist/*.AppImage"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          archive: false
+          path: "build/dist/dsda-launcher-*.tar.gz"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          archive: false
+          path: "build/dist/*.deb"
+
   build-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4.2.2
-      
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4.1.1
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730
         with:
-          aqtversion: '==3.1.*'
-          version: '6.2.0'
+          version: '6.11.*'
           host: 'mac'
           target: 'desktop'
           arch: 'clang_64'
-          
-      - name: build
-        run: |
-          cd src
-          mkdir build
-          cd build
-          qmake .. "CONFIG+=macdeploy"
-          make
-          macdeployqt ./dsda-launcher.app
 
-          brew install create-dmg
-          create-dmg --app-drop-link 10 10 ./dsda-launcher-${{ github.ref_name }}-mac.dmg ./dsda-launcher.app
-          
-      - uses: actions/upload-artifact@v4
+      - name: Configure
+        run: |
+          # Universal binaries need Xcode rather than Ninja
+          cmake -B build -GXcode -DCMAKE_INSTALL_PREFIX=inst
+
+      - name: Build
+        run: |
+          cmake --build build --config Release
+
+      - name: Package
+        run: |
+          cmake --install build
+          cd build && cpack
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: dsda-launcher-dev-mac
-          path: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
+          archive: false
+          path: "build/dist/dsda-launcher-*.dmg"
     
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true

@@ -1,0 +1,60 @@
+# General package metadata
+set(CPACK_BUILD_SOURCE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+set(CPACK_PACKAGE_EXECUTABLES "dsda-launcher" "dsda-launcher")
+set(CPACK_PACKAGE_ICON ${DIST_PATH}/icons/${FREEDESKTOP_APP_ID}.256x.png)
+set(CPACK_PACKAGE_NAME "dsda-launcher")
+set(CPACK_PACKAGE_VENDOR "Pedro Beirao")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "GUI launcher for dsda-doom")
+set(CPACK_PACKAGE_CONTACT "https://github.com/Pedro-Beirao")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/dist")
+
+# Debian package metadata
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "qt6-base qt6-svg")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/Pedro-Beirao/dsda-launcher")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER ${CPACK_PACKAGE_VENDOR})
+
+# RedHat package metadata
+set(CPACK_RPM_PACKAGE_REQUIRES "qt6-qtbase qt6-qtsvg")
+
+# MacOS metadata
+if(APPLE)
+    set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/src/icons/dsda-launcher.icns")
+    set(MACOSX_BUNDLE_ICON_FILE "dsda-launcher.icns")
+    set_target_properties(dsda-launcher PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/dist/mac/MacOSXBundleInfo.plist.in
+        MACOSX_BUNDLE_BUNDLE_NAME ${CPACK_PACKAGE_NAME}
+        MACOSX_BUNDLE_GUI_IDENTIFIER ${FREEDESKTOP_APP_ID}
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_LONG_VERSION_STRING ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
+        MACOSX_BUNDLE_ICON_FILE "dsda-launcher.icns"
+        MACOSX_BUNDLE_INFO_STRING ${CPACK_PACKAGE_DESCRIPTION_SUMMARY}
+        RESOURCE ${CPACK_PACKAGE_ICON}
+    )
+endif()
+
+# Source packages
+set(CPACK_SOURCE_GENERATOR "TGZ;ZIP")
+set(CPACK_SOURCE_IGNORE_FILES
+    /.git
+    /.*build.*
+    /\\\\.DS_Store
+)
+
+list(APPEND CPACK_GENERATOR "TGZ;ZIP")
+
+if(UNIX AND NOT APPLE)
+    include(packaging-linux)
+elseif(APPLE)
+    include(packaging-macos)
+endif()
+
+message(STATUS "CPack: Building archive distributions")
+include(CPack)

@@ -52,7 +52,7 @@ void MainWindow::on_additionalArguments_pushButton_clicked()
 
 void MainWindow::initializeIndicators()
 {
-    // ui->wadsSelected_indicator->setPixmap(QPixmap(":/pngs/pngs/wadsSelected_indicator.png").scaled(20, 20, Qt::KeepAspectRatio));
+    // ui->wadsSelected_indicator->setPixmap(QPixmap(":/pngs/src/pngs/wadsSelected_indicator.png").scaled(20, 20, Qt::KeepAspectRatio));
     connect(ui->wads_listWidget->model(), SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(show_hide_wadsSelected_indicator()));
     connect(ui->wads_listWidget->model(), SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(show_hide_wadsSelected_indicator()));
     connect(ui->wads_listWidget->model(), SIGNAL(modelReset()), this, SLOT(show_hide_wadsSelected_indicator()));
