@@ -89,6 +89,8 @@ jobs:
           qmake ..
           make
 
+          export EXTRA_QT_PLUGINS=waylandcompositor
+          export EXTRA_PLATFORM_PLUGINS=libqwayland-egl.so;libqwayland-generic.so
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
           chmod a+x ./linuxdeploy-x86_64.AppImage
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/latest/download/linuxdeploy-plugin-qt-x86_64.AppImage"
@@ -103,7 +105,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: dsda-launcher-dev-linux
-          path: src/build
+          path: src/build/DSDA-Launcher-x86_64.AppImage
           
   build-macos:
     runs-on: macos-latest
