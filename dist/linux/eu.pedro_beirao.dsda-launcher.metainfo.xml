@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
-  <id>io.github.pedro_beirao.dsda-launcher</id>
-  <name>dsda-Launcher</name>
-  <developer id="io.github.pedro_beirao.dsda-launcher">
-    <name>dsda-Launcher contributors</name>
+  <id>eu.pedro_beirao.dsda-launcher</id>
+  <name>dsda-launcher</name>
+  <developer id="eu.pedro_beirao.dsda-launcher">
+    <name>dsda-launcher contributors</name>
     <url>https://github.com/Pedro-Beirao/dsda-launcher/graphs/contributors</url>
   </developer>
   <branding>
@@ -12,7 +12,7 @@
   </branding>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
-  <launchable type="desktop-id">io.github.pedro_beirao.dsda-launcher.desktop</launchable>
+  <launchable type="desktop-id">eu.pedro_beirao.dsda-launcher.desktop</launchable>
   <url type="homepage">https://github.com/Pedro-Beirao/dsda-launcher</url>
   <url type="vcs-browser">https://github.com/Pedro-Beirao/dsda-launcher</url>
   <summary>GUI launcher for dsda-doom</summary>

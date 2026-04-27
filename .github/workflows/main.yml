@@ -101,8 +101,8 @@ jobs:
               --executable=./dsda-launcher \
               --output=appimage \
               --appdir=./ \
-              --desktop-file=../../dist/linux/io.github.pedro_beirao.dsda-launcher.desktop \
-              --icon-file=../../dist/icons/io.github.pedro_beirao.dsda-launcher.svg
+              --desktop-file=../../dist/linux/eu.pedro_beirao.dsda-launcher.desktop \
+              --icon-file=../../dist/icons/eu.pedro_beirao.dsda-launcher.svg
       
       - uses: actions/upload-artifact@v4
         with:
