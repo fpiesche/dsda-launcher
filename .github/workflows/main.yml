@@ -93,7 +93,12 @@ jobs:
           chmod a+x ./linuxdeploy-x86_64.AppImage
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/latest/download/linuxdeploy-plugin-qt-x86_64.AppImage"
           chmod a+x ./linuxdeploy-plugin-qt-x86_64.AppImage
-          ./linuxdeploy-x86_64.AppImage --plugin=qt --executable=./dsda-launcher --output=appimage --appdir=./ --desktop-file=../icons/dsda-Launcher.desktop --icon-file=../icons/dsda-launcher.svg
+          ./linuxdeploy-x86_64.AppImage --plugin=qt \
+              --executable=./dsda-launcher \
+              --output=appimage \
+              --appdir=./ \
+              --desktop-file=../dist/linux/io.github.pedro_beirao.dsda-launcher.desktop \
+              --icon-file=../dist/linux/io.github.pedro_beirao.dsda-launcher.svg
       
       - uses: actions/upload-artifact@v4
         with:
@@ -124,7 +129,10 @@ jobs:
           macdeployqt ./dsda-launcher.app
 
           brew install create-dmg
-          create-dmg --app-drop-link 10 10 ./dsda-launcher-${{ github.ref_name }}-mac.dmg ./dsda-launcher.app
+          create-dmg \
+            --app-drop-link 10 10 \
+            ./dsda-launcher-${{ github.ref_name }}-mac.dmg \
+            ./dsda-launcher.app
           
       - uses: actions/upload-artifact@v4
         with:

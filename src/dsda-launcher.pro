@@ -75,7 +75,7 @@ mac {
     }
     APP_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILES
-    QMAKE_INFO_PLIST =./Info.plist
+    QMAKE_INFO_PLIST =../dist/mac/Info.plist
     HEADERS += Mac.h
     OBJECTIVE_SOURCES += Mac.mm
 }
@@ -86,7 +86,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icons.qrc
+    icons.qrc \
     build
 
 DISTFILES += \
