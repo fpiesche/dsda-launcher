@@ -41,7 +41,10 @@ jobs:
             mingw-w64-x86_64-openssl
             make
             zip
-            
+
+      - name: Set reference slug
+        run: echo "REF_SLUG=${GITHUB_REF////_}" >> $GITHUB_ENV
+
       - shell: msys2 {0}
         run: |
           export PATH="/mingw64/bin:$PATH"
@@ -52,12 +55,13 @@ jobs:
           cd build
           qmake ..
           make
-          zip -j dsda-launcher-${{ github.ref_name }}-win64.zip release/dsda-launcher.exe
+          find . -name "*.exe"
+          zip -j dsda-launcher-${{ env.REF_SLUG }}-win64.zip release/dsda-launcher.exe
           
       - uses: actions/upload-artifact@v4
         with:
-          name: dsda-launcher-dev-win64
-          path: src\build\dsda-launcher-${{ github.ref_name }}-win64.zip
+          name: dsda-launcher-dev-${{ env.REF_SLUG }}-win64
+          path: src\build\dsda-launcher-${{ env.REF_SLUG }}-win64.zip
 
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
@@ -65,7 +69,7 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
-          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-win64.zip
+          artifacts: src/build/dsda-launcher-${{ env.REF_SLUG }}-win64.zip
           
   build-linux:
     runs-on: ubuntu-latest
@@ -81,7 +85,7 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           tools: 'tools_opensslv3_src'
-          
+
       - name: build
         run: |
           sudo apt install libfuse2
@@ -130,7 +134,10 @@ jobs:
           host: 'mac'
           target: 'desktop'
           arch: 'clang_64'
-          
+
+      - name: Set reference slug
+        run: echo "REF_SLUG=${GITHUB_REF////_}" >> $GITHUB_ENV
+
       - name: build
         run: |
           cd src
@@ -143,13 +150,13 @@ jobs:
           brew install create-dmg
           create-dmg \
             --app-drop-link 10 10 \
-            ./dsda-launcher-${{ github.ref_name }}-mac.dmg \
+            ./dsda-launcher-${{ env.REF_SLUG }}-mac.dmg \
             ./dsda-launcher.app
           
       - uses: actions/upload-artifact@v4
         with:
           name: dsda-launcher-dev-mac
-          path: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
+          path: src/build/dsda-launcher-${{ env.REF_SLUG }}-mac.dmg
     
       - name: Release
         if: ${{ contains(github.ref, 'tags') }}
@@ -157,4 +164,4 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           allowUpdates: true
-          artifacts: src/build/dsda-launcher-${{ github.ref_name }}-mac.dmg
+          artifacts: src/build/dsda-launcher-${{ env.REF_SLUG }}-mac.dmg
